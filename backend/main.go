@@ -1,15 +1,10 @@
 package main
 
 import (
-	// "github.com/louisohara/go-crud-full-stack/backend/api/controllers"
-	// "github.com/louisohara/go-crud-full-stack/backend/api/initialisers"
-	// "github.com/louisohara/go-crud-full-stack/backend/api/middleware"
+	"github.com/louisohara/go-crud-full-stack/backend/api/controllers"
+	"github.com/louisohara/go-crud-full-stack/backend/api/initialisers"
+	"github.com/louisohara/go-crud-full-stack/backend/api/middleware"
 
-	"backend/api/controllers"
-	"backend/api/initialisers"
-	"backend/api/middleware"
-
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,30 +13,34 @@ func init() {
 	initialisers.ConnectToDB()
 }
 
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		c.Writer.Header().Set("Access-Control-Expose-Headers", "Content-Length, Set-Cookie")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+		} else {
+			c.Next()
+		}
+	}
+}
+
+
 func main() {
 	router := gin.Default()
 
 	//CORS
- 	router.Use(cors.New(cors.Config{
-    AllowOrigins:     []string{"*"},
-    AllowMethods:     []string{"GET", "POST","PUT", "DELETE"},
-    AllowHeaders:     []string{"Origin"},
-    ExposeHeaders:    []string{"Content-Length"},
-    AllowCredentials: true,
-    // AllowOriginFunc: func(origin string) bool {
-    //   return origin == "https://github.com"
-    // },
-    // MaxAge: 12 * time.Hour,
-  }))
+ 	router.Use(corsMiddleware())
 
 	router.Static("/assets", "./assets")
 	router.MaxMultipartMemory = 8 << 20
 	
 	// endpoints
-	// router.GET("/", func(c *gin.Context) {c.JSON(http.StatusOK, gin.H{
-	// 	"message": "system running",
-	// })})
-	// router.GET("/", controllers.HomepageHandler)
 	router.POST("/signup", controllers.Signup)
 	router.POST("/login", controllers.Login)
 
@@ -51,6 +50,7 @@ func main() {
 		authGroup.GET("/validate", controllers.Validate)
 
 		authGroup.GET("/users", controllers.GetUsers)
+		
 		authGroup.GET("/users/:id", controllers.GetUserById)
 		authGroup.PUT("/users/:id", controllers.UpdateUser)
 		authGroup.POST("/users", controllers.CreateUser)

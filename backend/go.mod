@@ -1,10 +1,10 @@
-module backend/api
+module github.com/louisohara/go-crud-full-stack/backend/api
 
 go 1.22.2
 
 require (
-	github.com/gin-contrib/cors v1.7.1
 	github.com/gin-gonic/gin v1.9.1
+	github.com/go-playground/assert v1.2.1
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/joho/godotenv v1.5.1
 	golang.org/x/crypto v0.22.0

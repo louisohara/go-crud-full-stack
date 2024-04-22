@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"backend/api/initialisers"
-	"backend/api/models"
+	"github.com/louisohara/go-crud-full-stack/backend/api/initialisers"
+	"github.com/louisohara/go-crud-full-stack/backend/api/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -94,7 +94,7 @@ func Login(c *gin.Context) {
 
 	// IF YOU WANT TO RETURN TOKEN STRING TO SET IN LOCALSTORAGE
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Login successful",
+		"token": tokenString,
 	})
 }
 

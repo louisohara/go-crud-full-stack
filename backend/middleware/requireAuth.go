@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"backend/api/initialisers"
-	"backend/api/models"
+	"github.com/louisohara/go-crud-full-stack/backend/api/initialisers"
+	"github.com/louisohara/go-crud-full-stack/backend/api/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -51,7 +51,7 @@ func RequireAuth(c *gin.Context) {
 		// CONTINUE
 		c.Next()
 
-		fmt.Println(claims["foo"], claims["nbf"])
+	
 	} else {
 		c.AbortWithStatus(http.StatusUnauthorized)
 	}

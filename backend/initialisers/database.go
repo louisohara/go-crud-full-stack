@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"backend/api/models"
+	"github.com/louisohara/go-crud-full-stack/backend/api/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
