@@ -10,20 +10,23 @@ This application is a simple CRUD User management app. The backend is built in G
 To run the application locally, follow these steps:
 
 1. Clone the GitHub repository:
-git clone <[repository-url](https://github.com/louisohara/go-crud-full-stack/)>
+```console
+git clone https://github.com/louisohara/go-crud-full-stack/
+```
 
 2. Navigate to the root directory of the cloned repository:
+```console
 cd go-crud-full-stack
+```
 
 3. Build the Docker images and start the containers using Docker Compose:
+```console
 docker-compose up --build
-
-This command will read the `docker-compose.yaml` file, build the Docker images specified for the `nextapp` and `goapp` services using the Dockerfiles located in the `frontend` and `backend` directories respectively, and then start the containers for the frontend, backend, and database services.
-
+```
 
 This command will build and start the containers defined in the `docker-compose.yaml` file.
 
-5. Once the containers are up and running, you can access the application at:
+4. Once the containers are up and running, you can access the application at:
 
 - Frontend: [http://localhost:3000](http://localhost:3000)
 - Backend: [http://localhost:8080](http://localhost:8080)
