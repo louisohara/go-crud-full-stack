@@ -12,14 +12,14 @@ type FormDataType = {
 interface FormProps {
   userFile: File | null;
   user: User | null;
-  getUser: () => void;
+  getFile: () => void;
   modalId: string;
   isFormSubmitted: boolean;
   setIsFormSubmittedTrue: () => void;
 }
 const EditFileForm: React.FC<FormProps> = ({
   userFile,
-  getUser,
+  getFile,
   modalId,
   user,
   isFormSubmitted,
@@ -49,8 +49,9 @@ const EditFileForm: React.FC<FormProps> = ({
         );
 
         if (response.status === 201) {
+          console.log("submitted");
           setIsFormSubmittedTrue();
-          getUser();
+          getFile();
           reset();
         }
       } catch (error: any) {

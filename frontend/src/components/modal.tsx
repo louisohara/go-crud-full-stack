@@ -75,6 +75,13 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
     );
     const fileModalElement = document.getElementById(`fileModal-${id}-${alt}`);
 
+    if (fileModalElement) {
+      fileModalElement.addEventListener("shown.bs.modal", handleModalOpen);
+
+      return () => {
+        fileModalElement.removeEventListener("shown.bs.modal", handleModalOpen);
+      };
+    }
     if (editModalElement) {
       editModalElement.addEventListener("shown.bs.modal", handleModalOpen);
 
@@ -92,19 +99,12 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
         );
       };
     }
-    if (fileModalElement) {
-      fileModalElement.addEventListener("shown.bs.modal", handleModalOpen);
-
-      return () => {
-        fileModalElement.removeEventListener("shown.bs.modal", handleModalOpen);
-      };
-    }
   }, []);
 
   const handleModalOpen = () => {
+    setIsFormSubmittedFalse();
     getUser();
     getFile();
-    setIsFormSubmittedFalse();
   };
 
   const Icon = iconMap[type];
@@ -120,7 +120,9 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
             ? `#editModal-${id}-${alt}`
             : type === "delete"
             ? `#deleteModal-${id}-${alt}`
-            : `#fileModal-${id}-${alt}`
+            : type === "file"
+            ? `#fileModal-${id}-${alt}`
+            : ""
         }
       >
         {Icon ? (
@@ -223,7 +225,7 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
 
             <EditFileForm
               userFile={userFile}
-              getUser={getUser}
+              getFile={getFile}
               modalId={`fileModal-${id}-${alt}`}
               user={user}
               setIsFormSubmittedTrue={setIsFormSubmittedTrue}
