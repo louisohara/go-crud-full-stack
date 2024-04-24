@@ -92,7 +92,7 @@ const EditUserForm: React.FC<FormProps> = ({
                   })}
                   id="floatingInput"
                 />
-                <label htmlFor="floatingInput">First name</label>
+                <label>First name</label>
                 {errors.firstname && (
                   <div className="flex gap-2 my-2">
                     <p className="text-sm text-red-500">

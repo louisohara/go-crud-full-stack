@@ -79,9 +79,7 @@ const SignupForm: React.FC = () => {
             "is-invalid": errors.password,
           })}
         />
-        <label htmlFor="floatingIdPassword" className="form-lavel">
-          Password
-        </label>
+        <label className="form-lavel">Password</label>
         {errors.password && (
           <div className="flex mt-2 gap-2">
             <p className="text-sm text-red-500">{errors.password.message}</p>

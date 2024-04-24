@@ -95,9 +95,7 @@ const EditFileForm: React.FC<FormProps> = ({
             )}
             {!userFile && <p className="mb-3">No file found for this user.</p>}
             <div className="mb-3">
-              <label htmlFor="file" className="form-label">
-                Update file selection:
-              </label>
+              <label className="form-label">Update file selection:</label>
               <input
                 className="form-control"
                 type="file"

@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const response = await axios.post("http://localhost:3000/login", data, {
+      const response = await axios.post("http://localhost:8080/login", data, {
         withCredentials: true,
       });
       if (response.status === 200) {

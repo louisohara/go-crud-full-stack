@@ -48,26 +48,23 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
       );
       if (response.status === 200) {
         setUser(response.data);
-        await getFile(response.data);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getFile = async (user: User) => {
-    if (user) {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/api/users/${user.ID}/files`,
-          { withCredentials: true }
-        );
-        if (response.status === 200) {
-          setUserFile(response.data);
-        }
-      } catch (error) {
-        console.error(error);
+  const getFile = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/users/${id}/files`,
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        setUserFile(response.data);
       }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -76,6 +73,7 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
     const deleteModalElement = document.getElementById(
       `deleteModal-${id}-${alt}`
     );
+    const fileModalElement = document.getElementById(`fileModal-${id}-${alt}`);
 
     if (editModalElement) {
       editModalElement.addEventListener("shown.bs.modal", handleModalOpen);
@@ -94,10 +92,18 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
         );
       };
     }
+    if (fileModalElement) {
+      fileModalElement.addEventListener("shown.bs.modal", handleModalOpen);
+
+      return () => {
+        fileModalElement.removeEventListener("shown.bs.modal", handleModalOpen);
+      };
+    }
   }, []);
 
   const handleModalOpen = () => {
     getUser();
+    getFile();
     setIsFormSubmittedFalse();
   };
 

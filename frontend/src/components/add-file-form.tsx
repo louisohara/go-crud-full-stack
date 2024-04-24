@@ -83,10 +83,7 @@ const AddFileForm: React.FC<FormProps> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="modal-body">
             <div className="mb-3 w-full">
-              <label
-                htmlFor="userid"
-                className="mb-2 block text-sm font-medium"
-              >
+              <label className="mb-2 block text-sm font-medium">
                 Select user
               </label>
               <div className="relative">
@@ -101,12 +98,14 @@ const AddFileForm: React.FC<FormProps> = ({
                     "is-invalid": errors.userid,
                   })}
                 >
-                  <option selected>Select user</option>
-                  {users?.map((user) => (
-                    <option key={user.ID} value={user.ID}>
-                      {user.firstname} {user.surname}
-                    </option>
-                  ))}
+                  <option>Select user</option>
+                  {users && users.length > 0
+                    ? users.map((user) => (
+                        <option key={user.ID} value={user.ID}>
+                          {user.firstname} {user.surname}
+                        </option>
+                      ))
+                    : ""}
                 </select>
               </div>
               <div id="userid-error" aria-live="polite" aria-atomic="true">
@@ -120,9 +119,7 @@ const AddFileForm: React.FC<FormProps> = ({
               </div>
             </div>
             <div className="mb-3">
-              <label htmlFor="file" className="form-label">
-                Select file
-              </label>
+              <label className="form-label">Select file</label>
               <input
                 className="form-control"
                 type="file"

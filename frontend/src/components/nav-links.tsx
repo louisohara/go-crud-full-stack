@@ -31,11 +31,6 @@ interface NavProps {
   users: User[] | null;
 }
 
-type FormData = {
-  email: string;
-  password: string;
-};
-
 const NavLinks: React.FC<NavProps> = ({ getUsers, users }: NavProps) => {
   const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
@@ -47,7 +42,7 @@ const NavLinks: React.FC<NavProps> = ({ getUsers, users }: NavProps) => {
   };
   return (
     <>
-      {links.map((link, index) => {
+      {links?.map((link, index) => {
         const LinkIcon = link.icon;
 
         return (

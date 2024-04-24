@@ -20,7 +20,7 @@ const Table: React.FC<TableProps> = ({ getUsers, users }: TableProps) => {
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {users && users.length > 0 ? (
-              users.map((user) => {
+              users?.map((user) => {
                 return (
                   <div
                     key={user.ID}
@@ -80,7 +80,7 @@ const Table: React.FC<TableProps> = ({ getUsers, users }: TableProps) => {
             </thead>
             <tbody>
               {users && users.length > 0 ? (
-                users.map((user) => (
+                users?.map((user) => (
                   <tr key={user.ID}>
                     <th scope="row">{user.ID}</th>
                     <td>{user.firstname}</td>

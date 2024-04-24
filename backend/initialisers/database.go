@@ -14,14 +14,16 @@ var DB *gorm.DB
 
 func ConnectToDB() {
 	var err error
-
+	// get database url from dotenv
 	dsn := os.Getenv("DATABASE_URL")
+	// establish connection to database using gorm
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}
 
+	// run migrations
 	err = DB.AutoMigrate(&models.Admin{})
     if err != nil {
         log.Fatal("Failed to perform database migrations:", err)

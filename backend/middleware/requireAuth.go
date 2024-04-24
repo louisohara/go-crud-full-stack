@@ -14,15 +14,16 @@ import (
 )
 
 func RequireAuth(c *gin.Context) {
+	// look for cookie with authorization header
 	tokenString, err := c.Cookie("Authorization")
-	// CHECK IF TOKEN STRING
+	// if no authorization header give error
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"error": "missing token",
 		})
 	}
 
-	// CHECK THAT TOKEN STRING IS VALID JWT SIGNING METHOD
+	//IF TOKEN, CHECK THAT TOKEN STRING IS VALID JWT SIGNING METHOD
 	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error){
 	
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

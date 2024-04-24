@@ -1,23 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import Modal from "@/components/modal";
+
 import Table from "@/components/table";
 import React, { Suspense, useState } from "react";
 import Navbar from "@/components/navbar";
 import { User } from "@/data/definitions";
 import axios from "axios";
-import LoginForm from "@/components/login-form";
-import LoginPage from "./login";
-import { Router, useRouter } from "next/router";
-import Link from "next/link";
+
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Home: React.FC = () => {
   const [users, setUsers] = useState<User[] | null>(null);
   const apiUrl = "http://localhost:8080";
+
   const axiosInstance = axios.create({
     withCredentials: true,
   });
@@ -57,9 +55,7 @@ const Home: React.FC = () => {
           <div className="flex w-full items-center justify-between">
             <h1 className="text-2xl">Users</h1>
           </div>
-          <Suspense fallback="">
-            <Table users={users} getUsers={getUsers} />
-          </Suspense>
+          <Table users={users} getUsers={getUsers} />
         </div>
       </div>
       {!users && (
