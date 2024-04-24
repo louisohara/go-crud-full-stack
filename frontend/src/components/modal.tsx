@@ -69,35 +69,49 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
   };
 
   useEffect(() => {
-    const editModalElement = document.getElementById(`editModal-${id}-${alt}`);
-    const deleteModalElement = document.getElementById(
-      `deleteModal-${id}-${alt}`
-    );
-    const fileModalElement = document.getElementById(`fileModal-${id}-${alt}`);
+    if (type === "update") {
+      const editModalElement = document.getElementById(
+        `editModal-${id}-${alt}`
+      );
+      if (editModalElement) {
+        editModalElement.addEventListener("shown.bs.modal", handleModalOpen);
 
-    if (fileModalElement) {
-      fileModalElement.addEventListener("shown.bs.modal", handleModalOpen);
+        return () => {
+          editModalElement.removeEventListener(
+            "shown.bs.modal",
+            handleModalOpen
+          );
+        };
+      }
+    } else if (type === "delete") {
+      const deleteModalElement = document.getElementById(
+        `deleteModal-${id}-${alt}`
+      );
+      if (deleteModalElement) {
+        deleteModalElement.addEventListener("shown.bs.modal", handleModalOpen);
 
-      return () => {
-        fileModalElement.removeEventListener("shown.bs.modal", handleModalOpen);
-      };
-    }
-    if (editModalElement) {
-      editModalElement.addEventListener("shown.bs.modal", handleModalOpen);
+        return () => {
+          deleteModalElement.removeEventListener(
+            "shown.bs.modal",
+            handleModalOpen
+          );
+        };
+      }
+    } else if (type == "file") {
+      const fileModalElement = document.getElementById(
+        `fileModal-${id}-${alt}`
+      );
 
-      return () => {
-        editModalElement.removeEventListener("shown.bs.modal", handleModalOpen);
-      };
-    }
-    if (deleteModalElement) {
-      deleteModalElement.addEventListener("shown.bs.modal", handleModalOpen);
+      if (fileModalElement) {
+        fileModalElement.addEventListener("shown.bs.modal", handleModalOpen);
 
-      return () => {
-        deleteModalElement.removeEventListener(
-          "shown.bs.modal",
-          handleModalOpen
-        );
-      };
+        return () => {
+          fileModalElement.removeEventListener(
+            "shown.bs.modal",
+            handleModalOpen
+          );
+        };
+      }
     }
   }, []);
 
@@ -133,107 +147,114 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
         ) : null}
       </button>
 
-      <div
-        className="modal fade backdrop-blur-sm"
-        id={`editModal-${id}-${alt}`}
-        tabIndex={-1}
-        aria-labelledby={`editModalLabel-${id}-${alt}`}
-        aria-hidden="true"
-        data-bs-backdrop="false"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id={`editModalLabel-${id}-${alt}`}>
-                Edit User
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+      {type === "update" ? (
+        <div
+          className="modal fade backdrop-blur-sm"
+          id={`editModal-${id}-${alt}`}
+          tabIndex={-1}
+          aria-labelledby={`editModalLabel-${id}-${alt}`}
+          aria-hidden="true"
+          data-bs-backdrop="false"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id={`editModalLabel-${id}-${alt}`}>
+                  Edit User
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <EditUserForm
+                getUsers={getUsers}
+                modalId={`editModal-${id}-${alt}`}
+                id={id}
+                user={user}
+                setIsFormSubmittedTrue={setIsFormSubmittedTrue}
+                isFormSubmitted={isFormSubmitted}
+              />
             </div>
+          </div>{" "}
+        </div>
+      ) : type === "delete" ? (
+        <div
+          className="modal fade backdrop-blur-sm"
+          id={`deleteModal-${id}-${alt}`}
+          tabIndex={-1}
+          aria-labelledby={`deleteModalLabel-${id}-${alt}`}
+          aria-hidden="true"
+          data-bs-backdrop="false"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5
+                  className="modal-title"
+                  id={`deleteModalLabel-${id}-${alt}`}
+                >
+                  Delete User
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
 
-            <EditUserForm
-              getUsers={getUsers}
-              modalId={`editModal-${id}-${alt}`}
-              id={id}
-              user={user}
-              setIsFormSubmittedTrue={setIsFormSubmittedTrue}
-              isFormSubmitted={isFormSubmitted}
-            />
-          </div>
-        </div>{" "}
-      </div>
-
-      <div
-        className="modal fade backdrop-blur-sm"
-        id={`deleteModal-${id}-${alt}`}
-        tabIndex={-1}
-        aria-labelledby={`deleteModalLabel-${id}-${alt}`}
-        aria-hidden="true"
-        data-bs-backdrop="false"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id={`deleteModalLabel-${id}-${alt}`}>
-                Delete User
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <DeleteUserForm
+                getUsers={getUsers}
+                modalId={`deleteModal-${id}-${alt}`}
+                id={id}
+                user={user}
+                setIsFormSubmittedTrue={setIsFormSubmittedTrue}
+                isFormSubmitted={isFormSubmitted}
+              />
             </div>
-
-            <DeleteUserForm
-              getUsers={getUsers}
-              modalId={`deleteModal-${id}-${alt}`}
-              id={id}
-              user={user}
-              setIsFormSubmittedTrue={setIsFormSubmittedTrue}
-              isFormSubmitted={isFormSubmitted}
-            />
           </div>
         </div>
-      </div>
+      ) : type === "file" ? (
+        <div
+          className="modal fade backdrop-blur-sm"
+          id={`fileModal-${id}-${alt}`}
+          tabIndex={-1}
+          aria-labelledby={`fileModalLabel-${id}-${alt}`}
+          aria-hidden="true"
+          data-bs-backdrop="false"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id={`fileModalLabel-${id}-${alt}`}>
+                  User File
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
 
-      <div
-        className="modal fade backdrop-blur-sm"
-        id={`fileModal-${id}-${alt}`}
-        tabIndex={-1}
-        aria-labelledby={`fileModalLabel-${id}-${alt}`}
-        aria-hidden="true"
-        data-bs-backdrop="false"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id={`fileModalLabel-${id}-${alt}`}>
-                User File
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <EditFileForm
+                userFile={userFile}
+                getFile={getFile}
+                modalId={`fileModal-${id}-${alt}`}
+                user={user}
+                setIsFormSubmittedTrue={setIsFormSubmittedTrue}
+                isFormSubmitted={isFormSubmitted}
+              />
             </div>
-
-            <EditFileForm
-              userFile={userFile}
-              getFile={getFile}
-              modalId={`fileModal-${id}-${alt}`}
-              user={user}
-              setIsFormSubmittedTrue={setIsFormSubmittedTrue}
-              isFormSubmitted={isFormSubmitted}
-            />
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
