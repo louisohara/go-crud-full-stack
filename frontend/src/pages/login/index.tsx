@@ -10,7 +10,7 @@ export default function LoginPage() {
   };
   return (
     <main className="flex items-center justify-center h-screen">
-      <div className="relative m-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 ">
+      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
         <div className="flex w-full items-end rounded-lg bg-[#f19305] p-3 h-full">
           <div className="w-full text-center text-white text-2xl h-full">
             LOGIN

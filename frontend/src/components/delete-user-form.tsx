@@ -75,7 +75,11 @@ const DeleteUserForm: React.FC<DeleteFormProps> = ({
             <div className="btn btn-secondary" data-bs-dismiss="modal">
               Cancel
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary"
+            >
               Delete user
             </button>
           </div>

@@ -51,6 +51,14 @@ const LoginForm: React.FC = () => {
         <input
           {...register("email", {
             required: "Email is required",
+            validate: {
+              validateEmail: (value) => {
+                if (!value.includes("@")) {
+                  return "Please enter a valid email";
+                }
+                return true;
+              },
+            },
           })}
           type="email"
           placeholder="Email"

@@ -83,6 +83,10 @@ const EditUserForm: React.FC<FormProps> = ({
                 <input
                   {...register("firstname", {
                     required: "First name is required",
+                    pattern: {
+                      value: /[A-za-z]/,
+                      message: "Please enter alphabetic characters only",
+                    },
                   })}
                   type="firstname"
                   placeholder="First name"
@@ -105,6 +109,10 @@ const EditUserForm: React.FC<FormProps> = ({
                 <input
                   {...register("surname", {
                     required: "Surname is required",
+                    pattern: {
+                      value: /[A-za-z]/,
+                      message: "Please enter alphabetic characters only",
+                    },
                   })}
                   type="surname"
                   placeholder="Surname"
@@ -147,6 +155,16 @@ const EditUserForm: React.FC<FormProps> = ({
               <input
                 {...register("dob", {
                   required: "Date of birth is required",
+                  validate: {
+                    validDate: (value) => {
+                      const inputDate = new Date(value);
+                      const currentDate = new Date();
+                      if (inputDate > currentDate) {
+                        return "Please enter a valid date of birth";
+                      }
+                      return true;
+                    },
+                  },
                 })}
                 type="date"
                 placeholder="Date of Birth"

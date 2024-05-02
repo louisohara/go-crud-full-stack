@@ -91,7 +91,6 @@ const AddFileForm: React.FC<FormProps> = ({
                   {...register("userid", {
                     required: "Please select from the list of users",
                   })}
-                  // type="userid"
                   aria-describedby="userid"
                   aria-label="form-select userid"
                   className={clsx("form-select", {

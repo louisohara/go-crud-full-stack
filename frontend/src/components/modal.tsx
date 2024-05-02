@@ -10,7 +10,6 @@ import { File, User } from "@/data/definitions";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteUserForm from "./delete-user-form";
-import CreateUserForm from "./create-user-form";
 import EditFileForm from "./edit-file-form";
 
 interface ModalProps {
@@ -127,7 +126,7 @@ export default function Modal({ id, type, getUsers, alt }: ModalProps) {
     <div>
       <button
         type="button"
-        className="btn"
+        className="btn pt-0"
         data-bs-toggle="modal"
         data-bs-target={
           type === "update"
